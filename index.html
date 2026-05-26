@@ -1,14 +1,21 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="">
+  <head>
+    <title>Weather App</title>
+    <meta charset="UTF-8" />
+  </head>
 
-<head>
-  <title>Movable Ink</title>
-  <meta charset="UTF-8" />
-</head>
-
-<body>
-  <div id="app"></div>
-</body>
-<script src="src/app.js"></script>
-
+  <body>
+    <div id="app">
+      <h1>Weather App</h1>
+      <form>
+        <label for="zip_code">Zip Code</label>
+        <input id="zip_code" name="zip_code" />
+        <label for="date">Date</label>
+        <input type="date" name="date" id="date" />
+        <button type="submit">Search</button>
+      </form>
+    </div>
+  </body>
+  <script src="src/app.js"></script>
 </html>
