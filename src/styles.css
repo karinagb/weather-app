@@ -1,0 +1,185 @@
+/* ===== RESET ===== */
+
+* {
+  margin: 0;
+  padding: 0;
+
+  box-sizing: border-box;
+}
+
+/* ===== BODY ===== */
+
+body {
+  min-height: 100vh;
+
+  padding: 40px;
+
+  background: #f3f4f6;
+
+  font-family: Arial, Helvetica, sans-serif;
+
+  color: #111827;
+}
+
+/* ===== APP ===== */
+
+#app {
+  max-width: 1000px;
+
+  margin: 0 auto;
+}
+
+/* ===== TITLE ===== */
+
+h1 {
+  margin-bottom: 30px;
+
+  text-align: center;
+
+  font-size: 2.5rem;
+}
+
+/* ===== FORM ===== */
+
+form {
+  display: flex;
+  align-items: end;
+  gap: 16px;
+
+  margin-bottom: 30px;
+
+  padding: 20px;
+
+  background: white;
+
+  border-radius: 20px;
+
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+form label {
+  display: block;
+
+  margin-bottom: 8px;
+
+  font-size: 0.9rem;
+
+  color: #4b5563;
+}
+
+form input,
+form button {
+  padding: 12px 14px;
+
+  border-radius: 10px;
+
+  border: 1px solid #d1d5db;
+
+  font-size: 1rem;
+}
+
+form button {
+  border: none;
+
+  background: #2563eb;
+
+  color: white;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+form button:hover {
+  background: #1d4ed8;
+}
+
+/* ===== TODAY ===== */
+
+.dayData {
+  margin-bottom: 30px;
+
+  padding: 30px;
+
+  background: white;
+
+  border-radius: 20px;
+
+  text-align: center;
+
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.dayData h2 {
+  margin-bottom: 20px;
+}
+
+.dayData p {
+  margin-top: 15px;
+
+  color: #4b5563;
+
+  font-size: 1rem;
+}
+
+/* ===== WEEK ===== */
+
+.weekData {
+  padding: 30px;
+
+  background: white;
+
+  border-radius: 20px;
+
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.weekData h2 {
+  margin-bottom: 20px;
+}
+
+table {
+  width: 100%;
+
+  border-collapse: collapse;
+}
+
+td {
+  padding: 20px;
+
+  text-align: center;
+}
+
+td p {
+  margin-top: 12px;
+
+  font-size: 0.9rem;
+
+  color: #4b5563;
+}
+
+/* ===== WEATHER ICONS ===== */
+
+.weatherIcon {
+  display: block;
+
+  margin: 0 auto;
+
+  object-fit: contain;
+}
+
+/* ===== TODAY ICON ===== */
+
+.dayData .weatherIcon {
+  width: 120px;
+
+  height: 120px;
+}
+
+/* ===== WEEK ICONS ===== */
+
+.weekData .weatherIcon {
+  width: 55px;
+
+  height: 55px;
+}

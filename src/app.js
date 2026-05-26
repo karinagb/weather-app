@@ -1,15 +1,33 @@
+import sunny from '../icons/sunny.png';
+import cloudy from '../icons/cloudy.png';
+import rain from '../icons/rain.png';
+import snow from '../icons/snow.png';
+
 const form = document.querySelector('form');
+const weekData = document.getElementById('weekData');
+const dayData = document.querySelector('.dayData');
+
+let days = [];
+let day = {};
+
 let zip_code;
 let lan;
 let lon;
 let date;
+
+const icons = {
+  sunny,
+  cloudy,
+  rain,
+  snow,
+};
 
 function setLocation(e) {
   e.preventDefault();
 
   zip_code = this.querySelector('[name=zip_code]').value;
 
-  originalDate = this.querySelector('[name=date]').value;
+ const originalDate = this.querySelector('[name=date]').value;
 
   const formattedDate = new Intl.DateTimeFormat('en-GB', {
     day: '2-digit',
@@ -34,7 +52,6 @@ async function getCoords(zip_code, date) {
 
     lan = result.latitude;
     lon = result.longitude;
-
   } catch (error) {
     console.error(error.message);
   }
@@ -51,9 +68,47 @@ async function getForecast(lon, lan, date) {
     }
     const result = await response.json();
     console.log(result);
+
+    days = result.daily.data;
+    day = result.daily;
+    console.log(day.icon);
+
+    console.log('day', day);
+    console.log('days', days);
   } catch (error) {
     console.error(error.message);
   }
+  renderDaily(day);
+  renderWeek(days);
+}
+
+function renderDaily(day) {
+  return (dayData.innerHTML = `        
+<img 
+  src="${icons[day.icon]}"
+  alt="${day.icon}"
+  class="weatherIcon"
+/>
+        <p>${day.summary}</p>`);
+}
+
+function renderWeek(days) {
+  weekData.innerHTML = '<tr></tr>';
+
+  const row = weekData.querySelector('tr');
+
+  days.forEach((day) => {
+    row.innerHTML += `
+      <td class="dayCard">
+               <img 
+  src="${icons[day.icon]}"
+  alt="${day.icon}"
+  class="weatherIcon"
+/>
+        <p>${day.summary}</p>
+      </td>
+    `;
+  });
 }
 
 form.addEventListener('submit', setLocation);
