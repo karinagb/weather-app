@@ -1,165 +1,194 @@
 /* ===== RESET ===== */
-
 * {
   margin: 0;
   padding: 0;
-
   box-sizing: border-box;
 }
 
 /* ===== BODY ===== */
-
 body {
   min-height: 100vh;
 
-  padding: 40px;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
 
-  background: #f3f4f6;
-
-  font-family: Arial, Helvetica, sans-serif;
+  background: linear-gradient(135deg, #74ebd5, #acb6e5);
 
   color: #111827;
+
+  padding: 40px;
 }
 
-/* ===== APP ===== */
-
+/* ===== APP CONTAINER ===== */
 #app {
-  max-width: 1000px;
+  max-width: 900px;
 
   margin: 0 auto;
 }
 
 /* ===== TITLE ===== */
-
 h1 {
-  margin-bottom: 30px;
-
   text-align: center;
 
-  font-size: 2.5rem;
+  font-size: 2.8rem;
+
+  margin-bottom: 25px;
+
+  color: white;
+
+  letter-spacing: 1px;
 }
 
 /* ===== FORM ===== */
-
 form {
   display: flex;
-  align-items: end;
-  gap: 16px;
+  flex-wrap: wrap;
+  gap: 12px;
 
-  margin-bottom: 30px;
+  align-items: center;
+
+  justify-content: center;
 
   padding: 20px;
 
-  background: white;
+  background: rgba(255, 255, 255, 0.25);
+
+  backdrop-filter: blur(10px);
 
   border-radius: 20px;
 
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  margin-bottom: 25px;
 }
 
+/* each field group */
 form label {
+  font-size: 0.8rem;
+  color: white;
   display: block;
-
-  margin-bottom: 8px;
-
-  font-size: 0.9rem;
-
-  color: #4b5563;
+  margin-bottom: 6px;
 }
 
-form input,
-form button {
-  padding: 12px 14px;
+form input {
+  padding: 12px;
 
-  border-radius: 10px;
-
-  border: 1px solid #d1d5db;
-
-  font-size: 1rem;
-}
-
-form button {
   border: none;
 
-  background: #2563eb;
+  border-radius: 12px;
+
+  outline: none;
+
+  min-width: 180px;
+}
+
+/* button */
+form button {
+  padding: 12px 18px;
+
+  border: none;
+
+  border-radius: 12px;
+
+  background: #111827;
 
   color: white;
 
   cursor: pointer;
 
-  transition: 0.2s ease;
+  transition: 0.2s;
 }
 
 form button:hover {
-  background: #1d4ed8;
+  transform: scale(1.05);
 }
 
-/* ===== TODAY ===== */
-
+/* ===== TODAY CARD ===== */
 .dayData {
-  margin-bottom: 30px;
+  background: rgba(255, 255, 255, 0.25);
 
-  padding: 30px;
+  backdrop-filter: blur(10px);
 
-  background: white;
+  border-radius: 25px;
 
-  border-radius: 20px;
+  padding: 40px;
 
   text-align: center;
 
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  margin-bottom: 25px;
+
+  color: white;
 }
 
 .dayData h2 {
-  margin-bottom: 20px;
+  font-size: 1.5rem;
+
+  margin-bottom: 10px;
 }
 
 .dayData p {
-  margin-top: 15px;
+  margin-top: 10px;
 
-  color: #4b5563;
-
-  font-size: 1rem;
+  font-size: 1.1rem;
 }
 
-/* ===== WEEK ===== */
-
+/* ===== WEEK GRID (replace table feel with modern grid) ===== */
 .weekData {
-  padding: 30px;
+  background: rgba(255, 255, 255, 0.25);
 
-  background: white;
+  backdrop-filter: blur(10px);
 
-  border-radius: 20px;
+  border-radius: 25px;
 
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  padding: 25px;
+
+  color: white;
 }
 
 .weekData h2 {
-  margin-bottom: 20px;
+  margin-bottom: 15px;
+
+  text-align: center;
 }
 
+/* make table behave like grid */
 table {
   width: 100%;
 
   border-collapse: collapse;
 }
 
+tr {
+  display: flex;
+
+  justify-content: space-between;
+
+  gap: 10px;
+}
+
 td {
-  padding: 20px;
+  flex: 1;
+
+  background: rgba(255, 255, 255, 0.15);
+
+  border-radius: 15px;
+
+  padding: 15px;
 
   text-align: center;
+
+  transition: 0.2s;
+}
+
+td:hover {
+  transform: translateY(-4px);
+  background: rgba(255, 255, 255, 0.25);
 }
 
 td p {
-  margin-top: 12px;
+  margin-top: 10px;
 
-  font-size: 0.9rem;
-
-  color: #4b5563;
+  font-size: 0.85rem;
 }
 
-/* ===== WEATHER ICONS ===== */
-
+/* ===== ICONS ===== */
 .weatherIcon {
   display: block;
 
@@ -168,18 +197,14 @@ td p {
   object-fit: contain;
 }
 
-/* ===== TODAY ICON ===== */
-
+/* today icon */
 .dayData .weatherIcon {
-  width: 120px;
-
-  height: 120px;
+  width: 130px;
+  height: 130px;
 }
 
-/* ===== WEEK ICONS ===== */
-
+/* week icons */
 .weekData .weatherIcon {
-  width: 55px;
-
-  height: 55px;
+  width: 50px;
+  height: 50px;
 }

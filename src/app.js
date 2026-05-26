@@ -27,7 +27,7 @@ function setLocation(e) {
 
   zip_code = this.querySelector('[name=zip_code]').value;
 
- const originalDate = this.querySelector('[name=date]').value;
+  const originalDate = this.querySelector('[name=date]').value;
 
   const formattedDate = new Intl.DateTimeFormat('en-GB', {
     day: '2-digit',
@@ -45,19 +45,21 @@ async function getCoords(zip_code, date) {
 
   try {
     const response = await fetch(url);
+
     if (!response.ok) {
       throw new Error(`Response status: ${response.status}`);
     }
+
     const result = await response.json();
 
     lan = result.latitude;
     lon = result.longitude;
+
+    getForecast(lon, lan, date);
   } catch (error) {
     console.error(error.message);
   }
-  getForecast(lon, lan, date);
 }
-
 async function getForecast(lon, lan, date) {
   const url = `https://se-weather-api.herokuapp.com/api/v1/forecast?latitude=${lan}&longitude=${lon}&date=${date}`;
 
@@ -67,14 +69,9 @@ async function getForecast(lon, lan, date) {
       throw new Error(`Response status: ${response.status}`);
     }
     const result = await response.json();
-    console.log(result);
 
     days = result.daily.data;
     day = result.daily;
-    console.log(day.icon);
-
-    console.log('day', day);
-    console.log('days', days);
   } catch (error) {
     console.error(error.message);
   }
@@ -83,13 +80,14 @@ async function getForecast(lon, lan, date) {
 }
 
 function renderDaily(day) {
-  return (dayData.innerHTML = `        
-<img 
-  src="${icons[day.icon]}"
-  alt="${day.icon}"
-  class="weatherIcon"
-/>
-        <p>${day.summary}</p>`);
+  return (dayData.innerHTML = ` 
+    <h2>Today</h2>  
+    <img 
+      src="${icons[day.icon]}"
+      alt="${day.icon}"
+      class="weatherIcon"
+    />
+    <p>${day.summary}</p>`);
 }
 
 function renderWeek(days) {
@@ -100,11 +98,11 @@ function renderWeek(days) {
   days.forEach((day) => {
     row.innerHTML += `
       <td class="dayCard">
-               <img 
-  src="${icons[day.icon]}"
-  alt="${day.icon}"
-  class="weatherIcon"
-/>
+        <img 
+          src="${icons[day.icon]}"
+          alt="${day.icon}"
+          class="weatherIcon"
+        />
         <p>${day.summary}</p>
       </td>
     `;
