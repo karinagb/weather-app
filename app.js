@@ -94,7 +94,6 @@ function renderDaily(day) {
     <p>${day.summary}</p>
   `;
 
-  console.log(icons[day.icon]);
 }
 
 function renderWeek(days) {
