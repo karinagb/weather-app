@@ -8,33 +8,27 @@
 /* ===== BODY ===== */
 body {
   min-height: 100vh;
-
   font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-
   background: linear-gradient(135deg, #74ebd5, #acb6e5);
-
   color: #111827;
-
   padding: 40px;
 }
 
 /* ===== APP CONTAINER ===== */
 #app {
   max-width: 900px;
-
   margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
 }
 
 /* ===== TITLE ===== */
 h1 {
   text-align: center;
-
   font-size: 2.8rem;
-
-  margin-bottom: 25px;
-
+  margin-bottom: 10px;
   color: white;
-
   letter-spacing: 1px;
 }
 
@@ -43,168 +37,229 @@ form {
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
-
   align-items: center;
-
   justify-content: center;
-
   padding: 20px;
-
   background: rgba(255, 255, 255, 0.25);
-
   backdrop-filter: blur(10px);
-
   border-radius: 20px;
-
-  margin-bottom: 25px;
 }
 
-/* each field group */
 form label {
   font-size: 0.8rem;
   color: white;
-  display: block;
   margin-bottom: 6px;
+  display: block;
 }
 
 form input {
   padding: 12px;
-
   border: none;
-
   border-radius: 12px;
-
   outline: none;
-
   min-width: 180px;
 }
 
-/* button */
 form button {
   padding: 12px 18px;
-
   border: none;
-
   border-radius: 12px;
-
   background: #111827;
-
   color: white;
-
   cursor: pointer;
-
-  transition: 0.2s;
+  transition: 0.2s ease;
 }
 
 form button:hover {
   transform: scale(1.05);
 }
 
-/* ===== TODAY CARD ===== */
-.dayData {
-  background: rgba(255, 255, 255, 0.25);
+/* ===== LOCATION ===== */
+#locationName {
+  display: flex;
+  justify-content: start;
 
-  backdrop-filter: blur(10px);
+  margin-top: 8px;
+  margin-bottom: 12px;
+}
 
-  border-radius: 25px;
+.locationText {
+  font-size: 1.5rem;
+  font-weight: 600;
 
-  padding: 40px;
+  color: rgba(255, 255, 255, 0.98);
 
   text-align: center;
 
-  margin-bottom: 25px;
+  letter-spacing: 0.4px;
+  line-height: 1.4;
 
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
+
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* ===== TODAY CARD ===== */
+.dayData {
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(10px);
+  border-radius: 25px;
+  padding: 35px;
+  text-align: center;
   color: white;
 }
 
 .dayData h2 {
   font-size: 1.5rem;
-
   margin-bottom: 10px;
 }
 
 .dayData p {
   margin-top: 10px;
-
-  font-size: 1.1rem;
+  font-size: 1.05rem;
 }
 
-/* ===== WEEK GRID (replace table feel with modern grid) ===== */
+/* ===== WEEK SECTION ===== */
 .weekData {
   background: rgba(255, 255, 255, 0.25);
-
   backdrop-filter: blur(10px);
-
   border-radius: 25px;
-
   padding: 25px;
-
   color: white;
+   text-align: center;
 }
 
-.weekData h2 {
-  margin-bottom: 15px;
 
-  text-align: center;
+#weekDay {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 12px;
+  margin-top: 10px;
 }
 
-/* make table behave like grid */
-table {
-  width: 100%;
-
-  border-collapse: collapse;
-}
-
-tr {
-  display: flex;
-
-  justify-content: space-between;
-
-  gap: 10px;
-}
-
-td {
-  flex: 1;
-
+/* ===== DAY CARD ===== */
+.dayCard {
   background: rgba(255, 255, 255, 0.15);
-
   border-radius: 15px;
-
   padding: 15px;
-
   text-align: center;
-
-  transition: 0.2s;
+  transition: 0.2s ease;
 }
 
-td:hover {
-  transform: translateY(-4px);
+.dayCard:hover {
+  transform: translateY(-3px);
   background: rgba(255, 255, 255, 0.25);
 }
 
-td p {
-  margin-top: 10px;
-
+.date {
   font-size: 0.85rem;
+  margin-bottom: 8px;
+  opacity: 0.9;
+}
+
+.summary {
+  font-size: 0.8rem;
+  margin-top: 8px;
+  opacity: 0.9;
 }
 
 /* ===== ICONS ===== */
 .weatherIcon {
   display: block;
-
   margin: 0 auto;
-
   object-fit: contain;
 }
 
-/* today icon */
 .dayData .weatherIcon {
-  width: 130px;
-  height: 130px;
+  width: 120px;
+  height: 120px;
 }
 
-/* week icons */
 .weekData .weatherIcon {
   width: 50px;
   height: 50px;
+}
+
+/* ===== ANIMATION ===== */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===== MOBILE ===== */
+@media (max-width: 600px) {
+  body {
+    padding: 20px;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  form {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  form input,
+  form button {
+    width: 100%;
+  }
+
+  .dayData,
+  .weekData {
+    padding: 20px;
+  }
+
+  .locationText {
+    font-size: 1.2rem;
+    text-align: center;
+  }
+
+  .dayData .weatherIcon {
+    width: 90px;
+    height: 90px;
+  }
+}
+
+/* ===== MOBILE ===== */
+@media (max-width: 600px) {
+  body {
+    padding: 20px;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  form {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  form input,
+  form button {
+    width: 100%;
+  }
+
+  .dayData,
+  .weekData {
+    padding: 20px;
+  }
+
+  .locationText {
+    font-size: 1.2rem;
+    text-align: center;
+  }
+
+  .dayData .weatherIcon {
+    width: 90px;
+    height: 90px;
+  }
 }

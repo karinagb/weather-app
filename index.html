@@ -9,13 +9,18 @@
   <body>
     <div id="app">
       <h1>Weather App</h1>
+
       <form>
-        <label for="zip_code">Zip Code</label>
-        <input id="zip_code" name="zip_code" />
-        <label for="date">Date</label>
-        <input type="date" name="date" id="date" />
+        <label for="city">City or ZIP</label>
+        <input id="city" name="city" placeholder="e.g. Berlin or 10115" />
+
+        <label for="country">Country Code</label>
+        <input id="country" name="country" placeholder="e.g. DE, CR, US" />
+
         <button type="submit">Search</button>
       </form>
+
+      <div id="locationName"></div>
 
       <div class="dayData">
         <h2>Today</h2>
@@ -23,11 +28,9 @@
 
       <div class="weekData">
         <h2>Week</h2>
-
-        <table>
-          <tbody id="weekData"></tbody>
-        </table>
+        <div id="weekDay"></div>
       </div>
+
     </div>
   </body>
   <script src="src/app.js"></script>

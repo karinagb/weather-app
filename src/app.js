@@ -4,109 +4,118 @@ import rain from '../icons/rain.png';
 import snow from '../icons/snow.png';
 
 const form = document.querySelector('form');
-const weekData = document.getElementById('weekData');
+const locationName = document.getElementById('locationName');
 const dayData = document.querySelector('.dayData');
+const weekData = document.getElementById('weekData');
+const weekDay = document.getElementById('weekDay');
+
+const icons = { sunny, cloudy, rain, snow };
 
 let days = [];
-let day = {};
 
-let zip_code;
-let lan;
-let lon;
-let date;
-
-const icons = {
-  sunny,
-  cloudy,
-  rain,
-  snow,
-};
-
-function setLocation(e) {
+async function setLocation(e) {
   e.preventDefault();
 
-  zip_code = this.querySelector('[name=zip_code]').value;
-
-  const originalDate = this.querySelector('[name=date]').value;
-
-  const formattedDate = new Intl.DateTimeFormat('en-GB', {
-    day: '2-digit',
-    month: '2-digit',
-    year: 'numeric',
-  }).format(new Date(originalDate));
-
-  date = formattedDate;
-
-  getCoords(zip_code, date);
-}
-
-async function getCoords(zip_code, date) {
-  const url = `https://se-weather-api.herokuapp.com/api/v1/geo?zip_code=${zip_code}`;
+  const city = this.querySelector('[name=city]').value;
+  const country = this.querySelector('[name=country]').value;
 
   try {
-    const response = await fetch(url);
+    const place = await getCoords(city, country);
+    renderLocation(place.name, place.country);
 
-    if (!response.ok) {
-      throw new Error(`Response status: ${response.status}`);
-    }
+    await getForecast(place.latitude, place.longitude);
 
-    const result = await response.json();
-
-    lan = result.latitude;
-    lon = result.longitude;
-
-    getForecast(lon, lan, date);
-  } catch (error) {
-    console.error(error.message);
+  } catch (err) {
+    console.error('App error:', err);
   }
 }
-async function getForecast(lon, lan, date) {
-  const url = `https://se-weather-api.herokuapp.com/api/v1/forecast?latitude=${lan}&longitude=${lon}&date=${date}`;
 
-  try {
-    const response = await fetch(url);
-    if (!response.ok) {
-      throw new Error(`Response status: ${response.status}`);
-    }
-    const result = await response.json();
+async function getCoords(city, country) {
+  const url = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(city)}&count=10`;
 
-    days = result.daily.data;
-    day = result.daily;
-  } catch (error) {
-    console.error(error.message);
+  const res = await fetch(url);
+  const data = await res.json();
+
+  if (!data.results?.length) {
+    throw new Error('Location not found');
   }
-  renderDaily(day);
+
+  const countryCode = country.toUpperCase();
+
+  let match = data.results.find((r) => r.country_code === countryCode);
+
+  if (!match) match = data.results[0];
+
+  return match;
+}
+
+async function getForecast(lat, lon) {
+  const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=weather_code,temperature_2m_max,temperature_2m_min&timezone=auto`;
+
+  const res = await fetch(url);
+  const data = await res.json();
+
+  const d = data.daily;
+
+  days = d.time.map((date, i) => ({
+    date,
+    icon: mapWeatherCode(d.weather_code[i]),
+    summary: `Max ${d.temperature_2m_max[i]}° / Min ${d.temperature_2m_min[i]}°`,
+  }));
+
+  renderDaily(days[0]);
   renderWeek(days);
 }
 
+function mapWeatherCode(code) {
+  if (code === 0) return 'sunny';
+  if (code <= 3) return 'cloudy';
+  if (code <= 48) return 'cloudy';
+  if (code <= 67) return 'rain';
+  if (code <= 77) return 'snow';
+  return 'rain';
+}
+
+function renderLocation(name, country) {
+  locationName.innerHTML = `<h2 class="locationText">${name}, ${country}</h2>`;
+}
+
 function renderDaily(day) {
-  return (dayData.innerHTML = ` 
-    <h2>Today</h2>  
-    <img 
-      src="${icons[day.icon]}"
-      alt="${day.icon}"
-      class="weatherIcon"
-    />
-    <p>${day.summary}</p>`);
+  const date = new Date(day.date);
+  const label = date.toLocaleDateString('en-US', {
+    weekday: 'long',
+    month: 'short',
+    day: 'numeric',
+  });
+
+  dayData.innerHTML = `
+    <h2>${label}</h2>
+    <img src="${icons[day.icon]}" class="weatherIcon"/>
+    <p>${day.summary}</p>
+  `;
 }
 
 function renderWeek(days) {
-  weekData.innerHTML = '<tr></tr>';
+  weekDay.innerHTML = '';
 
-  const row = weekData.querySelector('tr');
+  days.slice(1).forEach((day) => {
+    const date = new Date(day.date);
+    const label = date.toLocaleDateString('en-US', {
+      weekday: 'short',
+      month: 'short',
+      day: 'numeric',
+    });
 
-  days.forEach((day) => {
-    row.innerHTML += `
-      <td class="dayCard">
-        <img 
-          src="${icons[day.icon]}"
-          alt="${day.icon}"
-          class="weatherIcon"
-        />
-        <p>${day.summary}</p>
-      </td>
+    weekDay.innerHTML += `
+      <div class="dayCard">
+        <p class="date">${label}</p>
+        <img src="${icons[day.icon]}" class="weatherIcon"/>
+        <p class="summary">${day.summary}</p>
+      </div>
     `;
   });
 }
+
+
 
 form.addEventListener('submit', setLocation);
