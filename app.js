@@ -1,16 +1,15 @@
-import sunny from '../icons/sunny.png';
-import cloudy from '../icons/cloudy.png';
-import rain from '../icons/rain.png';
-import snow from '../icons/snow.png';
-
 const form = document.querySelector('form');
 const locationName = document.getElementById('locationName');
 const dayData = document.querySelector('.dayData');
 const weekData = document.getElementById('weekData');
 const weekDay = document.getElementById('weekDay');
 
-const icons = { sunny, cloudy, rain, snow };
-
+const icons = {
+  sunny: './icons/sunny.png',
+  cloudy: './icons/cloudy.png',
+  rain: './icons/rain.png',
+  snow: './icons/snow.png',
+};
 let days = [];
 
 async function setLocation(e) {
@@ -81,6 +80,7 @@ function renderLocation(name, country) {
 }
 
 function renderDaily(day) {
+
   const date = new Date(day.date);
   const label = date.toLocaleDateString('en-US', {
     weekday: 'long',
@@ -93,6 +93,8 @@ function renderDaily(day) {
     <img src="${icons[day.icon]}" class="weatherIcon"/>
     <p>${day.summary}</p>
   `;
+
+  console.log(icons[day.icon]);
 }
 
 function renderWeek(days) {
